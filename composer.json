@@ -1,0 +1,66 @@
+{
+    "name": "lythany/support",
+    "description": "A comprehensive collection of utility classes, helper functions, and traits for PHP. Includes string manipulation, array operations, collections, and a powerful macro system.",
+    "type": "library",
+    "license": "MIT",
+    "keywords": [
+        "php",
+        "utilities",
+        "strings",
+        "arrays",
+        "collections",
+        "helpers",
+        "macros",
+        "lythany"
+    ],
+    "authors": [
+        {
+            "name": "Jade Lewis",
+            "email": "jade@lythany.com",
+            "role": "Creator & Maintainer"
+        }
+    ],
+    "require": {
+        "php": "^8.2"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^11.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Lythany\\Support\\": "src/"
+        },
+        "files": [
+            "src/helpers.php"
+        ]
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Lythany\\Support\\Tests\\": "tests/"
+        }
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true,
+    "config": {
+        "sort-packages": true,
+        "optimize-autoloader": true,
+        "preferred-install": "dist"
+    },
+    "scripts": {
+        "test": "phpunit",
+        "test-coverage": "phpunit --coverage-html=coverage",
+        "test-ci": "phpunit --coverage-text --coverage-clover=coverage.xml"
+    },
+    "homepage": "https://github.com/lythany/support",
+    "support": {
+        "issues": "https://github.com/lythany/support/issues",
+        "source": "https://github.com/lythany/support",
+        "docs": "https://github.com/lythany/support#readme"
+    },
+    "funding": [
+        {
+            "type": "github",
+            "url": "https://github.com/sponsors/lythany"
+        }
+    ]
+}
