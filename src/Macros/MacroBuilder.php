@@ -211,7 +211,9 @@ class MacroBuilder
         $originalCallback = Closure::fromCallable($callback);
         
         $this->implementation = function (...$args) use ($originalCallback, &$cache, $ttl) {
-            $key = md5(serialize($args));
+            // Create a secure cache key from arguments without using serialize
+            // This prevents potential security issues with malicious serialized data
+            $key = hash('sha256', json_encode($args, JSON_THROW_ON_ERROR));
             $now = time();
             
             // Check if we have a cached result that's still valid

@@ -18,7 +18,7 @@ if (!defined('LYTHANY_START')) {
 }
 
 if (!defined('LYTHANY_VERSION')) {
-    define('LYTHANY_VERSION', '1.0.0-dev');
+    define('LYTHANY_VERSION', '1.0.1');
 }
 
 // Load helper functions
@@ -131,8 +131,9 @@ if (!function_exists('load_environment')) {
         $lines = file($envFile, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
         
         foreach ($lines as $line) {
-            // Skip comments
-            if (str_starts_with(trim($line), '#')) {
+            // Skip comments and empty lines
+            $line = trim($line);
+            if (empty($line) || str_starts_with($line, '#')) {
                 continue;
             }
             
@@ -142,6 +143,11 @@ if (!function_exists('load_environment')) {
                 $key = trim($key);
                 $value = trim($value);
                 
+                // Validate key format (only allow alphanumeric and underscore)
+                if (!preg_match('/^[A-Za-z_][A-Za-z0-9_]*$/', $key)) {
+                    continue; // Skip invalid keys for security
+                }
+                
                 // Remove quotes if present
                 if (strlen($value) > 1 && 
                     ((str_starts_with($value, '"') && str_ends_with($value, '"')) ||
@@ -149,8 +155,11 @@ if (!function_exists('load_environment')) {
                     $value = substr($value, 1, -1);
                 }
                 
-                // Set environment variable if not already set
-                if (!isset($_ENV[$key]) && !isset($_SERVER[$key])) {
+                // Prevent null byte injection
+                $value = str_replace("\0", '', $value);
+                
+                // Set environment variable if not already set and value is reasonable length
+                if (!isset($_ENV[$key]) && !isset($_SERVER[$key]) && strlen($value) <= 4096) {
                     $_ENV[$key] = $value;
                     $_SERVER[$key] = $value;
                     putenv("{$key}={$value}");

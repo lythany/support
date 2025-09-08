@@ -7,16 +7,61 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.0.1] - 2025-09-08
+
+### Security Fixes
+- **Fixed potential security issue in macro system**: Replaced `serialize()` with `json_encode()` for cache key generation to prevent deserialization vulnerabilities
+- **Enhanced environment variable parsing**: Added validation for environment variable keys and values to prevent injection attacks
+- **Improved ASCII conversion**: Fixed `toAscii()` method to properly handle non-ASCII characters and prevent unexpected output
+- **Added input sanitization**: Comprehensive XSS prevention and input validation utilities
+
 ### Added
-- Performance benchmarking for critical operations
-- Additional string validation methods
-- Enhanced collection operations
-- Improved macro statistics and monitoring
+- **Security Class**: Comprehensive security utilities including:
+  - Secure password hashing with Argon2ID algorithm
+  - Cryptographically secure random string generation
+  - CSRF token generation
+  - Input sanitization and XSS prevention
+  - HMAC generation and verification
+  - Secure file path handling
+  - Rate limiting functionality
+  
+- **Validator Class**: Enhanced validation utilities with security considerations:
+  - Email validation with MX record checking
+  - URL validation with scheme restrictions and private IP blocking
+  - JSON validation with depth limits
+  - UUID validation (versions 1-5)
+  - Credit card validation using Luhn algorithm
+  - Phone number validation
+  - Password strength validation
+  - Date, range, and pattern validation
+  
+- **Security Helper Functions**: Global functions for common security operations:
+  - `secure_random()` - Generate cryptographically secure random strings
+  - `hash_password()` - Secure password hashing
+  - `verify_password()` - Password verification
+  - `sanitize_input()` - XSS prevention
+  - `validate_email()` - Email validation
+  - `validate_url()` - URL validation with security checks
+  - `csrf_token()` - CSRF token generation
+  - `secure_hash()` - Secure data hashing
+
+- **Security and Validator Facades**: Static access patterns for security utilities
 
 ### Changed
-- Optimized memory usage in string operations
-- Enhanced error messages across all components
-- Improved type safety with stricter declarations
+- **Version updated**: From 1.0.0-dev to 1.0.1
+- **Enhanced error handling**: Improved security-aware error handling throughout
+- **Better input validation**: Stricter validation in environment variable parsing
+
+### Fixed
+- **ASCII conversion bug**: Fixed `Str::toAscii()` method to properly remove non-ASCII characters including failed conversion markers
+- **Test failure**: Resolved failing `testToAscii` test case
+
+### Security Considerations
+- All new utilities follow security best practices
+- Input validation prevents injection attacks  
+- Secure defaults used throughout
+- Rate limiting to prevent abuse
+- Safe string handling to prevent XSS
 
 ## [1.0.0] - 2025-09-07
 
