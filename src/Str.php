@@ -1153,7 +1153,10 @@ class Str
         $value = static::ascii($value, $language);
 
         if ($removeUnsupported) {
+            // Remove any remaining non-ASCII characters (including ? marks from failed conversion)
             $value = preg_replace('/[^\x00-\x7F]/', '', $value);
+            // Also remove ? characters that might result from iconv failures
+            $value = str_replace('?', '', $value);
         }
 
         return $value;

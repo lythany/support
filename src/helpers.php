@@ -2167,3 +2167,112 @@ if (!function_exists('secure_url')) {
         return url($path, $parameters, true);
     }
 }
+
+// Security helper functions
+if (!function_exists('secure_random')) {
+    /**
+     * Generate a cryptographically secure random string
+     *
+     * @param int $length
+     * @return string
+     */
+    function secure_random(int $length = 32): string
+    {
+        return \Lythany\Support\Security::randomString($length);
+    }
+}
+
+if (!function_exists('hash_password')) {
+    /**
+     * Hash a password securely
+     *
+     * @param string $password
+     * @return string
+     */
+    function hash_password(string $password): string
+    {
+        return \Lythany\Support\Security::hashPassword($password);
+    }
+}
+
+if (!function_exists('verify_password')) {
+    /**
+     * Verify a password against its hash
+     *
+     * @param string $password
+     * @param string $hash
+     * @return bool
+     */
+    function verify_password(string $password, string $hash): bool
+    {
+        return \Lythany\Support\Security::verifyPassword($password, $hash);
+    }
+}
+
+if (!function_exists('sanitize_input')) {
+    /**
+     * Sanitize user input to prevent XSS
+     *
+     * @param string $input
+     * @param bool $preserveLineBreaks
+     * @return string
+     */
+    function sanitize_input(string $input, bool $preserveLineBreaks = false): string
+    {
+        return \Lythany\Support\Security::sanitizeInput($input, $preserveLineBreaks);
+    }
+}
+
+if (!function_exists('validate_email')) {
+    /**
+     * Validate email address
+     *
+     * @param string $email
+     * @param bool $checkMxRecord
+     * @return bool
+     */
+    function validate_email(string $email, bool $checkMxRecord = false): bool
+    {
+        return \Lythany\Support\Validator::email($email, $checkMxRecord);
+    }
+}
+
+if (!function_exists('validate_url')) {
+    /**
+     * Validate URL with security considerations
+     *
+     * @param string $url
+     * @param array<string> $allowedSchemes
+     * @return bool
+     */
+    function validate_url(string $url, array $allowedSchemes = ['http', 'https']): bool
+    {
+        return \Lythany\Support\Validator::url($url, $allowedSchemes);
+    }
+}
+
+if (!function_exists('csrf_token')) {
+    /**
+     * Generate a CSRF token
+     *
+     * @return string
+     */
+    function csrf_token(): string
+    {
+        return \Lythany\Support\Security::csrfToken();
+    }
+}
+
+if (!function_exists('secure_hash')) {
+    /**
+     * Generate a secure hash of data
+     *
+     * @param string $data
+     * @param string $algorithm
+     * @return string
+     */
+    function secure_hash(string $data, string $algorithm = 'sha256'): string
+    {
+        return \Lythany\Support\Security::hashData($data, $algorithm);
+    }
+}
